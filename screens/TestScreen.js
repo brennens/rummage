@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  Button,
   Image,
   Platform,
   ScrollView,
@@ -9,6 +10,8 @@ import {
   View,
 } from 'react-native';
 
+import * as firebase from 'firebase'
+
 import { TestComponent } from './../components/AppComponents'
 
 export default class TestScreen extends React.Component {
@@ -16,11 +19,16 @@ export default class TestScreen extends React.Component {
     header: null,
   };
 
+  onSignoutPress = () => {
+    firebase.auth().signOut()
+  }
+
   render() {
     return (
       <View style={styles.container}>
         <Text>Hello</Text>
         <TestComponent />
+        <Button title='Signout' onPress={this.onSignoutPress} />
       </View>
     );
   }
