@@ -6,12 +6,16 @@ import { TabNavigator, TabBarBottom } from 'react-navigation';
 import Colors from '../constants/Colors';
 
 import TestScreen from '../screens/TestScreen';
+import ProfileScreen from '../screens/user/ProfileScreen';
 
 export default TabNavigator(
   {
-    Home: {
+    Test: {
       screen: TestScreen,
     },
+    Profile: {
+      screen: ProfileScreen,
+    }
   },
   {
     navigationOptions: ({ navigation }) => ({
@@ -25,6 +29,9 @@ export default TabNavigator(
                 ? `ios-information-circle${focused ? '' : '-outline'}`
                 : 'md-information-circle';
             break;
+          case 'Profile':
+            iconName = 
+              Platform.OS === 'ios' ? `ios-contact${focused ? '' : '-outline'}` : 'md-contact'
         }
         return (
           <Ionicons

@@ -13,9 +13,11 @@ import * as firebase from 'firebase'
 export default class SignupScreen extends Component {
 
   constructor(props){
-    super(props);
+    super(props)
     this.state = {
       email: '',
+      firstName: '',
+      lastName: '',
       password: '',
       passwordConfirm: '',
     }
@@ -27,7 +29,16 @@ export default class SignupScreen extends Component {
       return
     }
     firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
-      .then(() => {}, (error) => {
+      .then(() => {
+        firebase.database().ref('users').set({
+          firstName: this.state.firstName,
+          lastName: this.state.lastName
+        }).then(() => {
+          Alert.alert('Success')
+        }, (error) => {
+          Alert.alert(error.message)
+        })
+      }, (error) => {
         Alert.alert(error.message)
       })
   }
@@ -46,6 +57,20 @@ export default class SignupScreen extends Component {
     return (
       <View style={styles.container}>
         <Text>Signup</Text>
+        <TextInput
+          autoCorrect={false}
+          onChangeText={(text) => { this.setState({firstName: text}) }}
+          placeholder='First Name'
+          style={styles.input}
+          value={this.state.firstName}
+        />
+        <TextInput
+          autoCorrect={false}
+          onChangeText={(text) => { this.setState({lastName: text}) }}
+          placeholder='Last Name'
+          style={styles.input}
+          value={this.state.lastName}
+        />
         <TextInput
           autoCapitalize='none'
           autoCorrect={false}
